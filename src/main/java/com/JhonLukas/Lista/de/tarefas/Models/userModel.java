@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Tb_user")
-public class userModel {
+public class UserModel {
 	
 	public interface UpdateUser{}
 	
@@ -39,6 +39,6 @@ public class userModel {
 	private String password;
 
 	@OneToMany(mappedBy = "user")
-	private List<taskModel> tasks = new ArrayList <taskModel>();
+	private List<TaskModel> tasks = new ArrayList <TaskModel>();
 
 }

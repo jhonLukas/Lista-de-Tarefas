@@ -17,7 +17,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name = "Tb_task")
-public class taskModel {
+public class TaskModel {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class taskModel {
 	@JoinColumn(name = "user_id", nullable = false, updatable = false)
 	private Long id;
 	@ManyToOne
-	private userModel user;
+	private UserModel user;
 	@NotBlank
 	@Column(name = "description", length = 256)
 	@Size(min = 1, max = 256)
