@@ -6,6 +6,8 @@ import java.util.Objects;
 
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,34 +21,34 @@ import lombok.Data;
 @Entity
 @Table(name = "Tb_user")
 public class UserModel {
-	
-	public interface UpdateUser{}
-	
-	public interface CreateUser{}
-	
-	
+
+	public interface UpdateUser {
+	}
+
+	public interface CreateUser {
+	}
+
 	@jakarta.persistence.Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
 	private Long id;
 
 	@Column(name = "username", unique = true, length = 100, nullable = false)
-	@NotBlank(groups = {CreateUser.class,UpdateUser.class} )
+	@NotBlank(groups = { CreateUser.class, UpdateUser.class })
 	private String login;
 
 	@Column(name = "password", length = 20, nullable = false)
-	@NotBlank(groups = { CreateUser.class})
-	@Size(groups =  {CreateUser.class,UpdateUser.class}, min = 8, max = 60)
+	@NotBlank(groups = { CreateUser.class })
+	@Size(groups = { CreateUser.class, UpdateUser.class }, min = 8, max = 60)
 	private String password;
 
 	@OneToMany(mappedBy = "user")
-	private List<TaskModel> task = new ArrayList <TaskModel>();
+	private List<TaskModel> task = new ArrayList<TaskModel>();
 
 	public UserModel(Long id, @NotBlank(groups = { CreateUser.class, UpdateUser.class }) String login,
 			@NotBlank(groups = CreateUser.class) @Size(groups = { CreateUser.class,
 					UpdateUser.class }, min = 8, max = 60) String password,
-			List<TaskModel> task) 
-	{
+			List<TaskModel> task) {
 		super();
 		this.id = id;
 		this.login = login;
@@ -54,47 +56,40 @@ public class UserModel {
 		this.task = task;
 	}
 
-	public UserModel()
-	{
-		
+	public UserModel() {
+
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
 
-	public void setId(Long id)
-	{
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getLogin() 
-	{
+	public String getLogin() {
 		return login;
 	}
 
-	public void setLogin(String login)
-	{
+	public void setLogin(String login) {
 		this.login = login;
 	}
 
-	public String getPassword()
-	{
+	public String getPassword() {
 		return password;
 	}
 
-	public void setPassword(String password) 
-	{
+	public void setPassword(String password) {
 		this.password = password;
 	}
 
-	public List<TaskModel> getTask()
-	{
+	@JsonIgnore
+	public List<TaskModel> getTask() {
 		return task;
 	}
 
-	public void setTask(List<TaskModel> task) 
-	{
+	public void setTask(List<TaskModel> task) {
 		this.task = task;
 	}
 
@@ -104,8 +99,7 @@ public class UserModel {
 	}
 
 	@Override
-	public boolean equals(Object obj) 
-	{
+	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
