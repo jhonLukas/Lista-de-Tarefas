@@ -35,7 +35,7 @@ public class TaskController {
 	@GetMapping("/user/{userid}")
 	public ResponseEntity<List <TaskModel>> findAllUserId (@PathVariable Long userid ){
 		List<TaskModel> objs = this.taskService.findAllUserById(userid);
-		return ResponseEntity.noContent().build();
+		return ResponseEntity.ok().body(objs);
 	}
 	
 	@GetMapping("{id}")

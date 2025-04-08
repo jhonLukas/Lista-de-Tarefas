@@ -34,6 +34,9 @@ public class TaskModel
 	@Size(min = 1, max = 256)
 	private String description;
 	
+	public TaskModel() {
+		
+	}
 	
 	public TaskModel(Long id, UserModel user, @NotBlank @Size(min = 1, max = 256) String description) {
 		super();
