@@ -6,7 +6,9 @@ import java.util.Objects;
 
 import org.hibernate.validator.constraints.NotBlank;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,7 +34,8 @@ public class UserModel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true)
 	private Long id;
-
+     
+	@JsonProperty(access = Access.WRITE_ONLY)
 	@Column(name = "username", unique = true, length = 100, nullable = false)
 	@NotBlank(groups = { CreateUser.class, UpdateUser.class })
 	private String login;
@@ -43,71 +46,8 @@ public class UserModel {
 	private String password;
 
 	@OneToMany(mappedBy = "user")
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private List<TaskModel> task = new ArrayList<TaskModel>();
 
-	public UserModel(Long id, @NotBlank(groups = { CreateUser.class, UpdateUser.class }) String login,
-			@NotBlank(groups = CreateUser.class) @Size(groups = { CreateUser.class,
-					UpdateUser.class }, min = 8, max = 60) String password,
-			List<TaskModel> task) {
-		super();
-		this.id = id;
-		this.login = login;
-		this.password = password;
-		this.task = task;
-	}
-
-	public UserModel() {
-
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getLogin() {
-		return login;
-	}
-
-	public void setLogin(String login) {
-		this.login = login;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@JsonIgnore
-	public List<TaskModel> getTask() {
-		return task;
-	}
-
-	public void setTask(List<TaskModel> task) {
-		this.task = task;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		UserModel other = (UserModel) obj;
-		return Objects.equals(id, other.id);
-	}
-
+	
 }
